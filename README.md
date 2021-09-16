@@ -2,8 +2,8 @@
 Metadata School Registration System
 
  Build APP:
- -mvn --version
- -mvn clean package spring-boot:repackage
+ - mvn --version
+ - mvn clean package spring-boot:repackage
  
  Run APP:
  Step 1: create network
