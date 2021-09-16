@@ -1,0 +1,29 @@
+ mvn --version
+ mvn clean package spring-boot:repackage
+
+ docker --version
+ docker container ls -a
+ docker container rm ?
+ docker image rm metadata/srs
+ docker build -t metadata/srs .
+ docker run -p 8080:8080 metadata/srs
+
+ docker container inspect ?
+ docker container logs -f ??
+ docker container exec -it ? bash
+
+ mysql -uroot -p
+ show databases;
+ SHOW TABLES;
+
+ docker network create srs-mysql
+ docker container run --name mysqldb --network srs-mysql -e MYSQL_ROOT_PASSWORD=admin -e MYSQL_DATABASE=srs_db -d mysql:8
+ docker container run --network srs-mysql --name app -p 8080:8080 -d metadata/srs
+
+
+  docker build -t metadata/srs .
+  docker pull mysql
+
+
+
+

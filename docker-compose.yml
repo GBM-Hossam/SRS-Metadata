@@ -1,0 +1,23 @@
+version: "3"
+services:
+  srs-app:
+    image: metadata/srs
+    container_name: app
+    ports:
+      - "8080:8080"
+    networks:
+      - srs-mysql
+    depends_on:
+      - mysqldb
+
+  mysqldb:
+    image: mysql
+    container_name: mysqldb
+    networks:
+      - srs-mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=srs_db
+
+networks:
+  srs-mysql:
