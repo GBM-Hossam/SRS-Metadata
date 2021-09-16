@@ -5,7 +5,7 @@ Metadata School Registration System
   - mvn --version
   - mvn clean package spring-boot:repackage
  
- - Run APP:
+Run APP:
   Step 1: create network
   CMD: docker network create srs-mysql
  
