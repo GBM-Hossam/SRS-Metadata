@@ -19,7 +19,7 @@ services:
 
   srs-app:
     restart: on-failure
-    build:  ./
+    image: hossamgbm/metadata_srs-app
     container_name: app
     ports:
       - "8080:8080"
