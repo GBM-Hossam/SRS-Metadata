@@ -1,5 +1,6 @@
 # SRS-Metadata
-Metadata School Registration System
+Metadata School Registration System <br/>
+Using spring boot, APIs catalog and mysql DB
 
 <br/>
 Run APP:<br/>
