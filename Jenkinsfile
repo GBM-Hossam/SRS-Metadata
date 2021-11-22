@@ -1,30 +1,13 @@
-pipeline {
-    agent {
-        docker {
-            image 'maven:3-alpine' 
-            args '-v /root/.m2:/root/.m2' 
-        }
-    }
-    stages {
-        stage('Build') { 
-            steps {
-                sh 'mvn -B -DskipTests clean package' 
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'mvn test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh './jenkins/scripts/deliver.sh'
-            }
-        }
-    }
+node {
+   stage 'Stage 1'
+   echo 'Hello World 1'
+   stage 'Stage 2'
+   echo 'Hello World 2'
+   stage 'Checkout'
+   git 'https://github.com/kulinski/jenkins-docker-example.git'
+   stage 'Build'
+   // Pick a container that has maven, but based on Alpine, so that its small
+   docker.image('jimschubert/8-jdk-alpine-mvn').inside {
+    sh 'mvn --version'
+ }
 }
