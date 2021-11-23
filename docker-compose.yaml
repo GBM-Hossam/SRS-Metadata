@@ -5,6 +5,8 @@ services:
     restart: always
     container_name: mysqldb
     image: mysql
+    ports:
+        - "3306:3306"
     #networks:
       #- srs-mysql
     environment:
