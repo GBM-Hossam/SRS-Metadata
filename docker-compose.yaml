@@ -7,8 +7,8 @@ services:
     image: mysql
     ports:
         - "3306:3306"
-    #networks:
-      #- srs-mysql
+    networks:
+      - jenkinsnet
     environment:
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: srs_db
@@ -25,12 +25,13 @@ services:
     container_name: app
     ports:
       - "8080:8080"
-    #networks:
-     # - srs-mysql
+    networks:
+      - jenkinsnet
     environment:
       WAIT_HOSTS: mysql:3306
     depends_on:
       - mysqldb
 
-#networks:
- # srs-mysql:
+networks:
+  jenkinsnet:
+    external: true
