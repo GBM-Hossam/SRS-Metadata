@@ -13,3 +13,11 @@ sudo systemctl status jenkins
 Id:hos
 Pwd:hos
 
+
+
+http://localhost:9000/
+cd /opt/sonarqube/bin/linux-x86-64
+sh sonar.sh start
+sh sonar.sh stop
+
+
