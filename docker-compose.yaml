@@ -21,14 +21,18 @@ services:
 
   srs-app:
     restart: on-failure
-    image: hossamgbm/metadata_srs-app
+    build: .
+    #image: hossamgbm/metadata_srs-app
     container_name: app
+
     ports:
       - "8080:8080"
     networks:
       - jenkinsnet
     environment:
       WAIT_HOSTS: mysql:3306
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/srs_db
     depends_on:
       - mysqldb
 

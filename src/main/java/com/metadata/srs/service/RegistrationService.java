@@ -16,6 +16,8 @@ import com.metadata.srs.exceptions.StudentNotFoundException;
 import com.metadata.srs.repository.CourseRepository;
 import com.metadata.srs.repository.RegistrationRepository;
 import com.metadata.srs.repository.StudentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,14 +37,14 @@ public class RegistrationService {
     StudentRepository studentRepository;
     @Autowired
     CourseRepository courseRepository;
-
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public RegistrationResponseDTO addRegistration(int courseId, int studentId, RegistrationRequestDTO registrationRequestDTO) throws RegistrationOperationException {
         //create registration, and convert to proper DTO
         try {
             Course course = courseRepository.findById(courseId)
                     .orElseThrow(() -> new CourseNotFoundException("Course not found for this id :: " + courseId));
-            System.out.println("Fetch course by id :: " + courseId + " , course :: " + course);
+            logger.trace("Fetch course by id :: " + courseId + " , course :: " + course);
 
             boolean isCourseFull = course.getRegistrations().size() >= AppConstants.MAX_COURSE_CAPACITY;
             if (isCourseFull)
@@ -51,7 +53,7 @@ public class RegistrationService {
 
             Student student = studentRepository.findById(studentId)
                     .orElseThrow(() -> new StudentNotFoundException("Student not found for this id :: " + studentId));
-            System.out.println("Fetch student by id :: " + studentId + " , student :: " + student);
+            logger.trace("Fetch student by id :: " + studentId + " , student :: " + student);
 
 
             boolean isStudentFull = student.getRegistrations().size() >= AppConstants.MAX_STUDENT_REGISTRATION;
@@ -70,7 +72,7 @@ public class RegistrationService {
             registration.setStudent(student);
             registration.setCourse(course);
             registrationrepository.save(registration);
-            System.out.println("Add registration :: " + registration);
+            logger.trace("Add registration :: " + registration);
 
             CourseResponseDTO courseResponseDTO = new CourseResponseDTO();
             courseResponseDTO.setId(registrationId.getCourseId());
@@ -94,7 +96,7 @@ public class RegistrationService {
         //retrieve a course students, and convert to proper DTO
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new CourseNotFoundException("Course not found for this id :: " + courseId));
-        System.out.println("Fetch course by id :: " + courseId + " , course :: " + course);
+        logger.trace("Fetch course by id :: " + courseId + " , course :: " + course);
 
         //System.out.println(course.getRegistrations());
         List<StudentResponseDTO> studentList = new ArrayList<>();
@@ -120,7 +122,7 @@ public class RegistrationService {
         //retrieve a student courses, and convert to proper DTO
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new StudentNotFoundException("Student not found for this id :: " + studentId));
-        System.out.println("Fetch student by id :: " + studentId + " , student :: " + student);
+        logger.trace("Fetch student by id :: " + studentId + " , student :: " + student);
 
         List<CourseResponseDTO> courseList = new ArrayList<>();
 

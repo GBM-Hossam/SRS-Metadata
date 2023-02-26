@@ -7,6 +7,8 @@ import com.metadata.srs.entity.Student;
 import com.metadata.srs.exceptions.StudentNotFoundException;
 import com.metadata.srs.exceptions.StudentOperationException;
 import com.metadata.srs.repository.StudentRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +21,12 @@ public class StudentService {
 
     @Autowired
     StudentRepository repository;
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public List<StudentResponseDTO> getAllStudents() {
         //retrieve students from SOR and convert to to DTO using Java streams
         List<Student> studentList = repository.findAll();
-        System.out.println("Fetch all students :: " + studentList);
+        logger.trace("Fetch all students :: " + studentList);
         List<StudentResponseDTO> studentResponseDTOList = studentList.stream()
                 .map(student -> new StudentResponseDTO(student.getId(), student.getFullName(), student.getPhone(), student.getEmail(), student.getAge()))
                 .collect(Collectors.toList());
@@ -34,7 +37,7 @@ public class StudentService {
         //retrieve student by id from SOR and convert to to DTO, if course id not found throw exception
         Student student = repository.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException("Student not found for this id :: " + id));
-        System.out.println("Fetch student by id :: " + id + " , student :: " + student);
+        logger.trace("Fetch student by id :: " + id + " , student :: " + student);
 
         return getStudentResponseDTO(student);
     }
@@ -45,7 +48,7 @@ public class StudentService {
                 .orElseThrow(() -> new StudentNotFoundException("Student not found for this id :: " + id));
 
         repository.deleteById(id);
-        System.out.println("Delete student by id :: " + id);
+        logger.trace("Delete student by id :: " + id);
     }
 
     public StudentResponseDTO updateStudent(int id, StudentRequestDTO studentDetails) throws StudentNotFoundException, StudentOperationException {
@@ -60,7 +63,7 @@ public class StudentService {
         student.setPhone(studentDetails.getPhone());
         try {
             student = repository.save(student);
-            System.out.println("Update student :: " + student);
+            logger.trace("Update student :: " + student);
             return getStudentResponseDTO(student);
         } catch (Exception e) {
             throw new StudentOperationException(e.getMessage());
@@ -78,7 +81,7 @@ public class StudentService {
             student.setAge(studentRequestDTO.getAge());
 
             student = repository.save(student);
-            System.out.println("Add student :: " + student);
+            logger.trace("Add student :: " + student);
             return getStudentResponseDTO(student);
         } catch (Exception e) {
             throw new StudentOperationException(e.getMessage());
