@@ -9,7 +9,6 @@ import com.metadata.srs.exceptions.CourseOperationException;
 import com.metadata.srs.repository.CourseRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,16 +19,19 @@ import java.util.stream.Collectors;
 ///service class for course CRUD ops
 public class CourseService {
 
-    @Autowired
-    CourseRepository repository;
+    final CourseRepository repository;
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    CourseService(CourseRepository repository) {
+        this.repository = repository;
+    }
 
     public List<CourseResponseDTO> getAllCourses() {
 
         //retrieve courses from SOR and convert to to DTO using Java streams
 
         List<Course> courseList = repository.findAll();
-        logger.trace("Fetch all courses :: " + courseList);
+        logger.trace("Fetch all courses {} ", courseList);
 
         return courseList.stream()
                 .map(course -> new CourseResponseDTO(course.getId(), course.getName(), course.getDuration(), course.getPrice()))
@@ -40,7 +42,7 @@ public class CourseService {
         //retrieve course by id from SOR and convert to to DTO, if course id not found throw exception
         Course course = repository.findById(id)
                 .orElseThrow(() -> new CourseNotFoundException("Course not found for this id :: " + id));
-        logger.trace("Fetch course by id :: " + id + " , course :: " + course);
+        logger.trace("Fetch course by id {} , course {}" , id  ,  course);
 
         return getCourseResponseDTO(course);
     }
@@ -48,10 +50,10 @@ public class CourseService {
     public void deleteCourseById(int id) throws CourseNotFoundException {
         //delete course by id from SOR, if course id not found throw exception
         repository.findById(id)
-                .orElseThrow(() -> new CourseNotFoundException("Course not found for this id :: " + id));
+                .orElseThrow(() -> new CourseNotFoundException("Course not found for this id :"+ id));
 
         repository.deleteById(id);
-        logger.trace("Delete course by id :: " + id);
+        logger.trace("Delete course by id {} ", id);
     }
 
     public CourseResponseDTO updateCourse(int id, CourseRequestDTO courseDetails) throws CourseNotFoundException, CourseOperationException {
@@ -65,7 +67,7 @@ public class CourseService {
         course.setPrice(courseDetails.getPrice());
         try {
             course = repository.save(course);
-            logger.trace("Update course :: " + course);
+            logger.trace("Update course {} " , course);
             return getCourseResponseDTO(course);
         } catch (Exception e) {
             throw new CourseOperationException(e.getMessage());
@@ -80,7 +82,7 @@ public class CourseService {
             course.setPrice(courseRequestDTO.getPrice());
 
             course = repository.save(course);
-            logger.trace("Add course :: " + course);
+            logger.trace("Add course {} ", course);
             return getCourseResponseDTO(course);
         } catch (Exception e) {
             throw new CourseOperationException(e.getMessage());
