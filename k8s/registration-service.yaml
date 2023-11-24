@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: registration-service
+  namespace: apis-services
+  labels:
+    application: registration-service
+spec:
+  type: ClusterIP
+  selector:
+    app: registration-service
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080
