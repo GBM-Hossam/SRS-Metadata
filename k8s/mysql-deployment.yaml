@@ -1,39 +1,56 @@
-# Deployment specification begins here
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql
+  name: registration-app-mysql
   labels:
-    app: mysql
-    tier: database
+    app: registration-app
 spec:
-  selector: # mySQL Pod Should contain same labels
+  selector:
     matchLabels:
-      app: mysql
+      app: registration-app
+      tier: mysql
   strategy:
     type: Recreate
   template:
     metadata:
-      labels: # Must match 'Service' and 'Deployment' selectors
-        app: mysql
-        tier: database
+      labels:
+        app: registration-app
+        tier: mysql
     spec:
       containers:
-      - name: mysql
-        image: mysql
-        imagePullPolicy: "IfNotPresent"
+      - image: mysql:5.6
+        name: mysql
         env:
-        - name: MYSQL_ROOT_PASSWORD
-          value: root
         - name: MYSQL_DATABASE
-          value: hos
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config-map
+              key: mysql-database-name
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: mysql-root-password
+        - name: MYSQL_USER
+          valueFrom:
+            configMapKeyRef:
+              name: mysql-config-map
+              key: mysql-user-username
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: mysql-user-password
+        livenessProbe:
+          tcpSocket:
+            port: 3306
         ports:
-        - containerPort: 3307
+        - containerPort: 3306
           name: mysql
         volumeMounts:
-        - mountPath: /var/lib/mysql
-          name: mysql-persistance-storage
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
       volumes:
-      - name: mysql-persistance-storage
+      - name: mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: mysql-pvc

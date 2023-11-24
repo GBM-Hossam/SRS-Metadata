@@ -1,16 +1,13 @@
-# Define a 'Service' To Expose MySQL to Other Services
 apiVersion: v1
 kind: Service
 metadata:
-  name: mysql
+  name: registration-app-mysql
   labels:
-    app: mysql
-    tier: database
+    app: registration-app
 spec:
   ports:
-  - port: 3307
-    targetPort: 3307
+  - port: 3306
   selector:
-    app: mysql
-    tier: database
-  clusterIP: None # DNS is used, so clusterIP is not needed
+    app: registration-app
+    tier: mysql
+  clusterIP: None

@@ -52,5 +52,9 @@ spring:
   config:
     activate:
       on-profile: linode
+  datasource:
+    url: jdbc:mysql://${DB_SERVER}:${DB_PORT:3306}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
 server.port: 8080
