@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: registration-service-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: kong
+
+spec:
+  tls:
+  - hosts:
+    - registration.hossam.io
+    secretName: registration-ingress-tls
+  rules:
+  - host: registration.hossam.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: registration-service
+            port:
+              number: 8080
