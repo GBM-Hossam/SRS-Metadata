@@ -44,7 +44,7 @@ public class StudentService {
 
     public void deleteStudentById(int id) throws StudentNotFoundException {
         //delete student by id from SOR, if course id not found throw exception
-        Student student = repository.findById(id)
+        repository.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException("Student not found for this id :: " + id));
 
         repository.deleteById(id);

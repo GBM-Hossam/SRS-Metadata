@@ -1,7 +1,9 @@
 package com.metadata.srs.controller;
 
-import com.metadata.srs.service.RegistrationService;
+import java.net.InetAddress;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,11 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 
     @Autowired
-    private RegistrationService registrationService;
+    Environment environment;
+
+    // @Autowired
+    // private RegistrationService registrationService;
 
     @GetMapping("/")
     public String index() {
-        return "Welcome to school registration APIs";
+        String hostAddress = InetAddress.getLoopbackAddress().getHostAddress();
+        String hostName = InetAddress.getLoopbackAddress().getHostName();
+        System.out.println(hostAddress + "<>" + hostName);
+        return "Welcome to courses registration <b><a href=/swagger-ui.html>APIs</a>";
     }
 
 }

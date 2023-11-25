@@ -31,10 +31,10 @@ spring:
 
 logging:
   level:
-    org.springframework.web: trace
-    guru.springframework.controllers: trace
-    org.hibernate: trace
-    com.metadata: trace
+    org.springframework.web: error
+    guru.springframework.controllers: error
+    org.hibernate: error
+    com.metadata: error
 
 management.endpoint.health.show-details: "ALWAYS"
 management.endpoints.web.exposure.include: "*"

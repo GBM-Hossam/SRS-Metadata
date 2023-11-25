@@ -12,5 +12,5 @@ public class SrsApplication {
 
 }
 
-//http://localhost:8080/swagger-ui.html
-//http://localhost:8080/actuator
+// http://localhost:7003/swagger-ui.html
+// http://localhost:7003/actuator

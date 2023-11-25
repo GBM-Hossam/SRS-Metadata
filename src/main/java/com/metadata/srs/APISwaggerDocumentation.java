@@ -24,7 +24,7 @@ public class APISwaggerDocumentation {
 
     public static final Contact CONTACT = new Contact("Hossam Kandel", "", "hossam20052@hotmail.com");
 
-    public static final ApiInfo DEFAULT_API = new ApiInfo("School registration system APIs", "API Swagger Documentation", "1.0", "urn:tos", CONTACT,
+    public static final ApiInfo DEFAULT_API = new ApiInfo("Registration APIs", "API Swagger Documentation", "1.0", "urn:tos", CONTACT,
             "Apache 2.0", "http://www.apache.org/licenses/LICENSE-2.0", new ArrayList<>());
     public static final Set<String> consumes = new HashSet<String>(Arrays.asList("application/json"));
     public static final Set<String> produces = new HashSet<String>(Arrays.asList("application/json"));
