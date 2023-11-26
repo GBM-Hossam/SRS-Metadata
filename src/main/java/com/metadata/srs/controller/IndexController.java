@@ -21,10 +21,10 @@ public class IndexController {
 
     @GetMapping("/")
     public String index() {
-        String hostAddress = InetAddress.getLoopbackAddress().getHostAddress();
-        String hostName = InetAddress.getLoopbackAddress().getHostName();
-        System.out.println(hostAddress + "<>" + hostName);
-        return "Welcome to courses registration <b><a href=/swagger-ui.html>APIs</a>";
+       // String hostAddress = InetAddress.getLoopbackAddress().getHostAddress();
+       // String hostName = InetAddress.getLoopbackAddress().getHostName();
+        //System.out.println(hostAddress + "<>" + hostName);
+        return "Welcome to courses registration <b><a href=/swagger-ui/index.html>APIs</a>";
     }
 
 }

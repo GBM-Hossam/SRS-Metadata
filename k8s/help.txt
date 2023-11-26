@@ -1,0 +1,18 @@
+docker tag school-registration-apis-srs-app hossamgbm/metadata_srs-app:6
+docker push hossamgbm/metadata_srs-app:6
+
+
+#kubectl annotate service registration-service konghq.com/plugins=gateway-correlation-id -n=apis-services
+#kubectl annotate ingress registration-service-ingress konghq.com/plugins=gateway-correlation-id -n=apis-servicesd
+
+#kubectl patch svc registration-service --type=json -p='[{"op": "remove", "path": "/metadata/annotations/konghq.com/plugins: gateway-correlation-id"}]' 
+
+
+
+Cluster ==> correlation
+
+/ ==> correlation
+/api/v1/courses ==> correlation/rate
+/api/v1/students  ==> correlation/rate
+
+Admin ==> correlation/rate/JWKS

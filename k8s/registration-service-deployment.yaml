@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: registration-service
-        image: hossamgbm/metadata_srs-app:5
+        image: hossamgbm/metadata_srs-app:6
         imagePullPolicy: Always
         env:
         - name: SPRING_PROFILES_ACTIVE
