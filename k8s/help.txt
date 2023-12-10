@@ -7,6 +7,10 @@ docker push hossamgbm/metadata_srs-app:6
 
 #kubectl patch svc registration-service --type=json -p='[{"op": "remove", "path": "/metadata/annotations/konghq.com/plugins: gateway-correlation-id"}]' 
 
+#kubectl config set-context --current --namespace=apis-services
+
+#kubectl create configmap jwks-oauth-plugin --from-file=jwks-oauth-plugin -n kong
+
 
 
 Cluster ==> correlation
